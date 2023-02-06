@@ -379,6 +379,7 @@ section{
 }
 .teams .carousel .card{
     background: #222;
+    margin-bottom:2em;
     border-radius: 6px;
     padding: 25px 35px;
     text-align: center;
