@@ -1,29 +1,30 @@
-document.addEventListener("DOMContentLoaded", function(){
-    $(window).scroll(function(){
-        if(this.scrollY > 20){
-            $('.navbar').addClass("sticky");
-        }
-        else{
-            $('.navbar').removeClass("sticky");
-        }
-        if(this.scrollY>500){
-            $('.scroll-up-btn').addClass("show");
-        }
-        else{
-            $('.scroll-up-btn').removeClass("show");
-        }
-    });
+let navbar=document.querySelector(".navbar");
+let scrollUp=document.querySelector(".scroll-up-btn");
+let menubtn=document.querySelector(".menu-btn");
+let menubar=document.querySelector(".menu-btn i");
+let html=document.querySelector("html");
+let carouse=document.querySelector(".carousel");
+let men=document.querySelector(".navbar .menu");
 
-    $('.scroll-up-btn').click(function(){
-        $('html').animate({scrollTop: 0});
-    });
+document.addEventListener("DOMContentLoaded",()=>{
+    window.addEventListener("scroll",()=>{
+        window.scrollY>20
+        ?navbar.classList.add("sticky")
+        :navbar.classList.remove("sticky");
 
+        window.scrollY>500
+        ?scrollUp.classList.add("show")
+        :scrollUp.classList.remove("show");
+    })
 
-    $('.menu-btn').click(function(){
-        $('.navbar .menu').toggleClass("active");
-        $('.menu-btn i').toggleClass("active");
-    });
+    scrollUp.addEventListener("click",()=>{
+        html.scrollTop=0;
+    })
 
+    menubtn.addEventListener("click",()=>{
+        men.classList.toggle("active");
+        menubar.classList.toggle("active");
+    })
 
     var typed=new Typed(".typing", {
         strings: ["Developer", "Hacker", "Designer"],
@@ -39,25 +40,5 @@ document.addEventListener("DOMContentLoaded", function(){
         loop: true
     })
 
-    $('.carousel').owlCarousel({
-        margin: 20,
-        loop: true,
-        autoplayTimeOut: 2000,
-        autoplayHoverPause: true,
-        responsive: {
-            0:{
-                item: 1,
-                nav: false
-            },
-            600:{
-                item: 2,
-                nav: false
-            },
-            1000:{
-                item: 3,
-                nav: false
-            },
-        }
 
-    });
 });
