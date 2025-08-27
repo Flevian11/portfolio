@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Future of Web Development by Flevian Ochoka Ahithopel, a Software Developer and IT Trainer in Malava, Kenya. Explore emerging trends in web development, including AI-driven design and progressive web apps.">
+    <meta name="keywords" content="web development, AI-driven design, progressive web apps, JavaScript, web trends, IT trainer, Malava, Kenya">
+    <meta name="author" content="Flevian Ochoka Ahithopel">
+    <title>The Future of Web Development | Tech Ghost</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" />
+    <style>
+        :root {
+            --primary: #2DD4BF; /* Vibrant teal */
+            --secondary: #134E4A; /* Deep teal */
+            --accent: #F43F5E; /* Rose red */
+            --light: #F9FAFB; /* Soft white */
+            --dark: #111827; /* Rich charcoal */
+            --gray: #6B7280; /* Neutral gray */
+            --highlight: #FBBF24; /* Warm amber */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background: var(--light);
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 2000;
+            transition: width 0.3s ease;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--light) 0%, #A7F3D0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%232DD4BF' fill-opacity='0.6' d='M0,192L48,186.7C96,181,192,171,288,154.7C384,139,480,117,576,117.3C672,117,768,139,864,160C960,181,1056,203,1152,197.3C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            animation: wave 25s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+            100% { transform: translateY(0); }
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .blog-content img {
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-content img:hover {
+            transform: scale(1.05);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+        }
+
+        .mobile-menu {
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .icon-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .icon-circle:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .comment-card {
+            background: #ECFEFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .comment-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 14px 16px;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+            background: white;
+        }
+
+        .comment-form .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-form label {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .comment-form input:focus + label,
+        .comment-form textarea:focus + label,
+        .comment-form input:not(:placeholder-shown) + label,
+        .comment-form textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 12px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            background: white;
+            padding: 0 4px;
+        }
+
+        .related-post-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .related-post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .newsletter-form input {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full z-50 py-4 px-6 md:px-12" role="navigation" aria-label="Main navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="../../index.html" class="text-2xl font-bold text-primary flex items-center group" aria-label="Tech Ghost Home">
+                <i class="fas fa-ghost mr-2 text-primary transition-colors duration-300 group-hover:text-accent group-hover:scale-110" aria-hidden="true"></i> Tech Ghost
+            </a>
+            <div class="hidden md:flex space-x-10">
+                <a href="../../index.html#home" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Home">Home</a>
+                <a href="../../index.html#about" class="text-gray-700 hover:text-primary transition font-medium" aria-label="About">About</a>
+                <a href="../../index.html#projects" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Projects">Projects</a>
+                <a href="../../index.html#blog" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Blog">Blog</a>
+                <a href="../../index.html#skills" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Skills">Skills</a>
+                <a href="../../index.html#contact" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Contact">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none" aria-label="Toggle mobile menu">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 w-3/4 h-full bg-white shadow-lg p-6">
+            <button id="mobile-menu-close" class="text-gray-700 mb-6 focus:outline-none" aria-label="Close mobile menu">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="flex flex-col space-y-6">
+                <a href="../../index.html#home" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Home">Home</a>
+                <a href="../../index.html#about" class="text-gray-700 hover:text-primary transition font-medium" aria-label="About">About</a>
+                <a href="../../index.html#projects" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Projects">Projects</a>
+                <a href="../../index.html#blog" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Blog">Blog</a>
+                <a href="../../index.html#skills" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Skills">Skills</a>
+                <a href="../../index.html#contact" class="text-gray-700 hover:text-primary transition font-medium" aria-label="Contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="text-center" data-aos="fade-up" data-aos-duration="1200">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">The Future of Web Development</h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-6">Exploring emerging trends in web development, including AI-driven design and progressive web apps</p>
+                <p class="text-gray-500 text-sm">By Flevian Ochoka Ahithopel | Published on August 15, 2025</p>
+                <div class="flex justify-center space-x-4 mt-6">
+                    <a href="https://www.linkedin.com/shareArticle?url=flevian11.github.io/portfolio/blog/website/index.html" target="_blank" class="icon-circle" aria-label="Share on LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url=flevian11.github.io/portfolio/blog/website/index.html&text=Check out this article on The Future of Web Development!" target="_blank" class="icon-circle" aria-label="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=flevian11.github.io/portfolio/blog/website/index.html" target="_blank" class="icon-circle" aria-label="Share on Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content Section -->
+    <section id="blog-content" class="py-20 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-4xl mx-auto blog-content">
+                <img src="https://plus.unsplash.com/premium_photo-1685086785054-d047cdc0e525?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2ViJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDA%3D" alt="The Future of Web Development" class="w-full h-auto mb-8 lazy" loading="lazy" data-aos="fade-up">
+                <div class="prose prose-lg max-w-none" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="text-2xl font-semibold mb-4">Introduction</h2>
+                    <p class="text-gray-600 mb-6">Web development is evolving rapidly in 2025, driven by advancements in AI, enhanced user expectations, and new technologies. As a Software Developer and IT Trainer, I’ve seen how these trends are reshaping the industry. This article explores key trends, including AI-driven design, progressive web apps (PWAs), and more, to help developers stay ahead.</p>
+
+                    <h2 class="text-2xl font-semibold mb-4">1. AI-Driven Web Design</h2>
+                    <p class="text-gray-600 mb-6">Artificial intelligence is transforming web development by automating design and improving user experiences.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Use AI tools like Figma’s plugins for rapid prototyping.</li>
+                        <li>Implement chatbots and personalized content with machine learning.</li>
+                        <li>Leverage AI for accessibility testing and optimization.</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8QUl8ZW58MHx8MHx8fDA%3D" alt="AI-Driven Web Design" class="w-full h-auto my-8 lazy" loading="lazy" data-aos="fade-up">
+
+                    <h2 class="text-2xl font-semibold mb-4">2. Progressive Web Apps (PWAs)</h2>
+                    <p class="text-gray-600 mb-6">PWAs combine the best of web and mobile apps, offering offline capabilities and app-like experiences.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Use Service Workers for offline functionality.</li>
+                        <li>Implement Web App Manifests for installable apps.</li>
+                        <li>Optimize performance with lazy loading and caching.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mb-4">3. Enhanced JavaScript Frameworks</h2>
+                    <p class="text-gray-600 mb-6">Modern JavaScript frameworks like React, Vue, and Svelte are driving faster, more interactive web apps.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Use Next.js for server-side rendering and SEO.</li>
+                        <li>Leverage Svelte for lightweight, high-performance apps.</li>
+                        <li>Integrate TypeScript for better code scalability.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mb-4">4. WebAssembly for Performance</h2>
+                    <p class="text-gray-600 mb-6">WebAssembly (Wasm) enables near-native performance for web apps, ideal for computationally intensive tasks.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Use Wasm for tasks like image processing or gaming.</li>
+                        <li>Combine with JavaScript for hybrid performance.</li>
+                        <li>Explore tools like Emscripten for C/C++ integration.</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Web Development Performance" class="w-full h-auto my-8 lazy" loading="lazy" data-aos="fade-up">
+
+                    <h2 class="text-2xl font-semibold mb-4">5. Focus on Web Accessibility</h2>
+                    <p class="text-gray-600 mb-6">Accessibility is non-negotiable in 2025, ensuring inclusivity for all users.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Follow WCAG 2.1 guidelines for compliance.</li>
+                        <li>Use semantic HTML and ARIA landmarks.</li>
+                        <li>Test with screen readers like NVDA or VoiceOver.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mb-4">6. Low-Code and No-Code Platforms</h2>
+                    <p class="text-gray-600 mb-6">Low-code and no-code platforms are empowering non-developers while speeding up development for professionals.</p>
+                    <ul class="list-disc list-inside mb-6 text-gray-600">
+                        <li>Use platforms like Webflow for rapid prototyping.</li>
+                        <li>Integrate APIs with tools like Zapier.</li>
+                        <li>Combine with custom code for flexibility.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mb-4">Conclusion</h2>
+                    <p class="text-gray-600 mb-6">The future of web development in 2025 is exciting, with AI, PWAs, WebAssembly, and accessibility leading the charge. By embracing these trends, developers can create fast, inclusive, and innovative web experiences. Stay updated and experiment with new tools to remain competitive in this dynamic field.</p>
+                </div>
+                <div class="mt-10 flex justify-between items-center" data-aos="fade-up" data-aos-delay="200">
+                    <a href="../../index.html#blog" class="btn-primary">Back to Blog</a>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/shareArticle?url=flevian11.github.io/portfolio/blog/website/index.html" target="_blank" class="icon-circle" aria-label="Share on LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url=flevian11.github.io/portfolio/blog/website/index.html&text=Check out this article on The Future of Web Development!" target="_blank" class="icon-circle" aria-label="Share on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=flevian11.github.io/portfolio/blog/website/index.html" target="_blank" class="icon-circle" aria-label="Share on Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts Section -->
+    <section id="related-posts" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 md:px-12">
+            <h2 class="text-3xl font-bold mb-16 text-center section-title mx-auto" data-aos="fade-up">Related Posts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Related Post 1 -->
+                <div class="related-post-card bg-white p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://images.unsplash.com/photo-1614064548237-096f735f344f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y3liZXIlMjBzZWN1cml0eXxlbnwwfHwwfHx8MA%3D%3D" alt="Cybersecurity Best Practices" class="w-full h-48 object-cover lazy" loading="lazy">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Cybersecurity Best Practices</h3>
+                    <p class="text-gray-600 mb-4">Key strategies to secure your applications and protect sensitive data in 2025.</p>
+                    <div class="flex justify-between items-center">
+                        <a href="../cybersec/index.html" class="text-primary hover:text-accent font-medium">Read More</a>
+                        <span class="text-gray-500 text-sm">Aug 10, 2025</span>
+                    </div>
+                </div>
+                <!-- Related Post 2 -->
+                <div class="related-post-card bg-white p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Building Scalable Android Apps" class="w-full h-48 object-cover lazy" loading="lazy">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Building Scalable Android Apps</h3>
+                    <p class="text-gray-600 mb-4">Tips for developing high-performance Android applications using Java and Kotlin.</p>
+                    <div class="flex justify-between items-center">
+                        <a href="../android/index.html" class="text-primary hover:text-accent font-medium">Read More</a>
+                        <span class="text-gray-500 text-sm">Aug 5, 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section id="comments" class="py-20 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <h2 class="text-3xl font-bold mb-16 text-center section-title mx-auto" data-aos="fade-up">Comments</h2>
+            <div class="max-w-4xl mx-auto">
+                <!-- Comment Form -->
+                <form id="comment-form" class="comment-form bg-white p-8 rounded-lg shadow-md mb-12" data-aos="fade-up" data-aos-delay="100">
+                    <div class="input-group">
+                        <input type="text" id="comment-name" name="name" placeholder=" " required aria-required="true">
+                        <label for="comment-name">Your Name</label>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="comment-message" name="message" rows="5" placeholder=" " required aria-required="true"></textarea>
+                        <label for="comment-message">Your Comment</label>
+                    </div>
+                    <div id="comment-message" class="hidden mb-4 text-sm"></div>
+                    <button type="submit" class="btn-primary w-full">Post Comment</button>
+                </form>
+                <!-- Sample Comments -->
+                <div class="space-y-6">
+                    <div class="comment-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold mr-4">JM</div>
+                            <div>
+                                <h4 class="font-semibold">James Mutua</h4>
+                                <p class="text-gray-500 text-sm">August 17, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">The section on PWAs was insightful! I’m planning to convert my site to a PWA based on your tips.</p>
+                    </div>
+                    <div class="comment-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold mr-4">SN</div>
+                            <div>
+                                <h4 class="font-semibold">Sarah Njoroge</h4>
+                                <p class="text-gray-500 text-sm">August 16, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">Great read! Any recommendations for beginner-friendly no-code platforms to start with?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-ghost mr-2 text-primary"></i> Tech Ghost
+                    </h3>
+                    <p class="text-gray-400 mt-2">Software Developer & IT Trainer</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="../../index.html#home" class="text-gray-400 hover:text-white transition" aria-label="Home">Home</a>
+                    <a href="../../index.html#about" class="text-gray-400 hover:text-white transition" aria-label="About">About</a>
+                    <a href="../../index.html#projects" class="text-gray-400 hover:text-white transition" aria-label="Projects">Projects</a>
+                    <a href="../../index.html#blog" class="text-gray-400 hover:text-white transition" aria-label="Blog">Blog</a>
+                    <a href="../../index.html#skills" class="text-gray-400 hover:text-white transition" aria-label="Skills">Skills</a>
+                    <a href="../../index.html#contact" class="text-gray-400 hover:text-white transition" aria-label="Contact">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h4 class="text-lg font-semibold mb-4 text-center">Stay Updated</h4>
+                <form id="newsletter-form" class="newsletter-form flex flex-col sm:flex-row gap-4 justify-center">
+                    <input type="email" id="newsletter-email" placeholder="Enter your email" required aria-required="true">
+                    <button type="submit" class="btn-primary">Subscribe</button>
+                </form>
+                <div id="newsletter-message" class="hidden mt-4 text-center text-sm"></div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Flevian Ochoka Ahithopel. All rights reserved.</p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <a href="https://www.linkedin.com/shareArticle?url=flevian11.github.io/portfolio" target="_blank" class="icon-circle" aria-label="Share on LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url=flevian11.github.io/portfolio&text=Check out my portfolio!" target="_blank" class="icon-circle" aria-label="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1200,
+            once: true,
+            offset: 120,
+            easing: 'ease-out-quart'
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('show');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('show');
+            }
+
+            // Scroll progress bar
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Back to top
+        const backToTop = document.querySelector('.back-to-top');
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Newsletter form validation
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterMessage = document.getElementById('newsletter-message');
+
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value.trim();
+
+            if (email) {
+                newsletterMessage.classList.remove('hidden', 'text-red-500');
+                newsletterMessage.classList.add('text-green-500');
+                newsletterMessage.textContent = 'Subscribed successfully!';
+                newsletterForm.reset();
+                setTimeout(() => {
+                    newsletterMessage.classList.add('hidden');
+                }, 3000);
+            } else {
+                newsletterMessage.classList.remove('hidden', 'text-green-500');
+                newsletterMessage.classList.add('text-red-500');
+                newsletterMessage.textContent = 'Please enter a valid email.';
+            }
+        });
+
+        // Comment form validation
+        const commentForm = document.getElementById('comment-form');
+        const commentMessage = document.getElementById('comment-message');
+
+        commentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('comment-name').value.trim();
+            const message = document.getElementById('comment-message').value.trim();
+
+            if (name && message) {
+                commentMessage.classList.remove('hidden', 'text-red-500');
+                commentMessage.classList.add('text-green-500');
+                commentMessage.textContent = 'Comment posted successfully!';
+                commentForm.reset();
+                setTimeout(() => {
+                    commentMessage.classList.add('hidden');
+                }, 3000);
+            } else {
+                commentMessage.classList.remove('hidden', 'text-green-500');
+                commentMessage.classList.add('text-red-500');
+                commentMessage.textContent = 'Please fill out all fields.';
+            }
+        });
+
+        // Lazy loading observer
+        const lazyImages = document.querySelectorAll('img.lazy');
+        const lazyObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.src; // Trigger load
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => lazyObserver.observe(img));
+    </script>
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The Future of Web Development",
+        "description": "Exploring emerging trends in web development, including AI-driven design and progressive web apps.",
+        "author": {
+            "@type": "Person",
+            "name": "Flevian Ochoka Ahithopel",
+            "url": "flevian11.github.io/portfolio"
+        },
+        "datePublished": "2025-08-15",
+        "image": "https://plus.unsplash.com/premium_photo-1685086785054-d047cdc0e525?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2ViJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDA%3D",
+        "url": "flevian11.github.io/portfolio/blog/website/index.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tech Ghost",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            }
+        },
+        "comment": [
+            {
+                "@type": "Comment",
+                "author": {
+                    "@type": "Person",
+                    "name": "James Mutua"
+                },
+                "datePublished": "2025-08-17",
+                "text": "The section on PWAs was insightful! I’m planning to convert my site to a PWA based on your tips."
+            },
+            {
+                "@type": "Comment",
+                "author": {
+                    "@type": "Person",
+                    "name": "Sarah Njoroge"
+                },
+                "datePublished": "2025-08-16",
+                "text": "Great read! Any recommendations for beginner-friendly no-code platforms to start with?"
+            }
+        ]
+    }
+    </script>
+</body>
+</html>
